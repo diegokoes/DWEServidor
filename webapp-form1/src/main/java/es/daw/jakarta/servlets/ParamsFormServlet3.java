@@ -17,175 +17,103 @@ import java.util.Map;
 @WebServlet("/registro3")
 public class ParamsFormServlet3 extends HttpServlet {
     /*
-     * El campo serialVersionUID es una identificación única para la clase serializable.
+     * El campo serialVersionUID es una identificación única para la clase
+     * serializable.
      * Evita conflictos.
      */
-    private static final long serialVersionUID = 1L;    
-    
+    private static final long serialVersionUID = 1L;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        
+        System.out.println(" ** ** * * ** DO GEEET!");
 
-
-        // 1. LECTURA DE PARÁMETROS DEL REQUEST.
-        /*
-         * \s ==> cualquier carácter de espacio en blanco incluyendo (\t, \n, \r)
-         * Si ponemos \s simplemente, dará error por secuencia de escape inválida. 
-         * En java la barra \ se usa para \n \t ....
-         * Por eso hay que escapar \s
-         * 
-         */
-        // Si no va relleno llegará cadena vacía
-        // Cuidadín con los espacios en blanco!!!!
-        String username = req.getParameter("username").replaceAll("\\s", ""); 
-        //String username2 = req.getParameter("username").replace(" ", "");
-
-        System.out.println("[ParamsFormServlet] username <"+username+">");
-        String password = req.getParameter("password");
+        // Lo mismo que en el Params1 con los getPara...
+        String username = req.getParameter("username").replaceAll("\\s", "");
+        String password = req.getParameter("password").replaceAll("\\s", "");
         String email = req.getParameter("email").replaceAll("\\s", "");
         String pais = req.getParameter("pais");
         String[] lenguajes = req.getParameterValues("lenguajes");
-        if (lenguajes != null){
-            System.out.println("[ParamsFormServlet] lenguajes 1:"+ Arrays.toString(lenguajes));
-            System.out.println("[ParamsFormServlet] lenguajes 2:"+ lenguajes.toString());
-            System.out.println("[ParamsFormServlet] lenguajes 3:"+ lenguajes);
-        }
         String[] roles = req.getParameterValues("roles");
-
-        String idioma = req.getParameter("idioma"); // si no hay ningún radio marcado, vendrá como nulo
-
+        String idioma = req.getParameter("idioma");
+        String secreto = req.getParameter("secreto");
         String habilitar = req.getParameter("habilitar");
 
-        boolean enabled = habilitar != null && habilitar.equals("on");
+        System.out.println("username : " + username + "\n" +
+                "password : " + password + "\n" +
+                "email : " + email + "\n" +
+                "roles : " + Arrays.toString(roles) + "\n" +
+                "pais : " + pais + "\n" +
+                "lenguajes : " + Arrays.toString(lenguajes) + "\n" +
+                "idioma : " + idioma + "\n" +
+                "secreto : " + secreto + "\n" +
+                "habilitar : " + habilitar);
+        // Utilizaremos en el Sevlet una colección Map para indicar el campo del
+        // formulario y la descripción del error.
+        Map<String, String> errores = new HashMap<>();
 
-        System.out.println("[ParamsFormServlet] habilitar:"+ habilitar);
-
-        String secreto = req.getParameter("secreto");
-        System.out.println("[ParamsFormServlet] secreto:"+ secreto);
-
-
-        // DECLARACIONES DE VARIABLES...
-        /*
-         * Generalmente una mejor práctica. Principios de diseño orientado a interfaces
-         * Tu código dependerá de la interfaz (List) en lugar de la implementación concreta (ArrayList). 
-         * Esto facilita cambiar la implementación a otra clase que implemente la interfaz List 
-         * (como LinkedList, CopyOnWriteArrayList, etc.) sin necesidad de modificar mucho el código.
-         * Solo puedes utilizar los métodos definidos en la interfaz List. 
-         * Si necesitas acceder a métodos específicos de ArrayList, tendrías que hacer un casting.
-         */
-
-        /*
-         * ArrayList si necesitas acceso rápido por índice o si tienes pocas modificaciones en la lista.
-         * LinkedList si haces muchas inserciones o eliminaciones en el medio de la lista o en los extremos, o si tu lista cambia de tamaño con mucha frecuencia.
-         */
-        //ArrayList<String> errores = new ArrayList<>();
-        //List<String> errores2 = new ArrayList<>();
-        //List<String> errores3 = new List<>(); // Error no puedo crear objetos de una interface
-
-        /*
-         * FASE II: utilizamos un MAP para cargar los errores
-         */
-        Map<String,String> errores = new HashMap<>();
-
-        // 2. COMPROBACIONES PARA GENERAR ERRORES
-        if (username.isEmpty()){
-            //errores.add("El username es obligatorio!");
-            errores.put("username", "El username es obligatorio!");
+        if (username.isBlank()) {
+            errores.put("username", "El username es obligatorio");
         }
-        if (password.isEmpty()){
-            errores.put("password","El password no puede ser vacío!");
+        if (password.isBlank()) {
+            errores.put("password", "El password no puede estar vacio");
         }
-            
-        // Comprobamos simplemente que el email tenga @
-        if (email.isEmpty() || !email.contains("@"))
-            errores.put("email","El email es obligatorio y debe tener un formato correcto (una @)");
-
-        if (idioma == null)
-            errores.put("idioma","Debe seleccionar un idioma!");
-        
-
-        if (roles == null || roles.length == 0){
-            errores.put("roles","Debe seleccionar al menos un role!");
+        if (email.isBlank() || !email.matches("[a-zA-Z]+@[a-z]{3,}.[a-z]{2,}")) {
+            errores.put("email", "El email es requerido y debe tener un formato adecuado!");
         }
-
-        if (lenguajes == null || lenguajes.length == 0)
-            errores.put("lenguajes","Debe seleccionar al menos un lenguaje!");
-
-        // 3. GENERAR LA PÁGINA HTML RESPUESTA
-        //response.getWriter().append("Served at: ").append(request.getContextPath());
+        if (idioma == null) {
+            errores.put("idioma", "no has aniadido ningun idioma");
+        }
+        if (pais.isBlank()) {
+            errores.put("pais", "selecciona un pais");
+        }
+        if (lenguajes == null) {
+            errores.put("lenguajes", "tienes que seleccionar algun lenguaje de programacion!!");
+        }
+        if (roles == null) {
+            errores.put("roles", "tienes que seleccionar algun rol!!");
+        }
+        boolean habilitado = habilitar != null && habilitar.equals("on");
+        if (!habilitado) {
+            errores.put("habilitar", "No has habilitado el formulario!!");
+        }
 
         resp.setContentType("text/html");
-
         try (PrintWriter out = resp.getWriter()) {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>ParamsFormServlet</title>");
-            out.println("</title>");
-            out.println("   <body>");
-            out.println("       <h1>Informe de datos recibidos del form</h1>");
-            out.println("       <ul>");
-
-            if (!errores.isEmpty()){
-                //FASE I
-                // En el caso de que haya errores, pinto los errores en la página html resultado
-                //    for (String error : errores) {
-                //         out.printf("<li> %s </li>\n", error);
-                //         //out.println("<li>"+error+"</li>");
-                //    }
-                
-                //errores.forEach( error ->  out.printf("<li> %s </li>\n", error));
-
-
-                // errores.forEach( (error) -> {
-                //     out.printf("<li> %s </li>\n", error);
-                //     System.out.println("error:"+error);
-                // } );
-
-
-                // FASE II ------------ PARA EL LUNES 30 SEPTIEMBRE!!!!
-                req.setAttribute("errores", errores);
-                getServletContext().getRequestDispatcher("/index3.jsp").forward(req, resp);  
-
-                
-                
-            }else{
-                // Informe de todos datos del formulario
-                out.println("<li>Username:"+username+"</li>");
-
+            if (errores.isEmpty()) {
+                out.println("<title>Reto1 resultados form</title>");
+                out.println("<body>");
+                out.println("<h1>Formulario rellenado correctamente! Tus datos: </h1>");
                 StringBuilder sb = new StringBuilder();
-                sb.append("<li>Password:").append(password).append("</li>")
-                .append("<li>Email:").append(email).append("</li>")
-                .append("<li>Lenguajes: <ul>");
+                sb.append("<p>Username: " + username + "</p>").append("<p>Password: " + password + "</p>")
+                        .append("<p>Email: " + email + "</p>").append("<p>Roles: \n<ul>");
+                for (String rol : roles) {
+                    sb.append("<li>" + rol + "</li>");
+                }
+                sb.append("</ul></p>").append("<p>Pais: " + pais + "</p>").append("<p>Lenguajes : <ol>");
+                Arrays.asList(lenguajes).forEach(lenguaje -> sb.append("<li>" + lenguaje + "</li>"));
 
-                // for (String lenguaje : lenguajes) {
-                //     sb.append("<li>"+lenguaje+"</li>");
-                // }
-                if (lenguajes != null)
-                    Arrays.asList(lenguajes).forEach( lenguaje -> sb.append("<li>"+lenguaje+"</li>"));
+                sb.append("</ol><p>Idioma: " + idioma + "</p>").append("<p>Habilitado?: " + habilitado + "</p>")
+                        .append("<p>nº secreto: " + secreto + "</p>");
 
-                sb.append("</ul><li>Roles: <ul>");
-                Arrays.asList(roles).forEach( role -> sb.append("<li>"+role+"</li>"));
-                
-                sb.append("</ul><li>Idioma:").append(idioma).append("</li>")
-                .append("<li>Habilitado:").append(enabled)
-                .append("<li>Secreto:").append(secreto).append("</li>");
+                out.println(sb.toString());
 
-
-                out.println(sb.toString());              
-
-
+            } else {
+                req.setAttribute("errores", errores);
+                getServletContext().getRequestDispatcher("/index3.jsp").forward(req, resp);
             }
-
-            out.println("       </ul>");
-            out.println("       <p><a href=\"index.jsp\">volver</a></p>");
-
-            out.println("   </body>");
-
+            out.println("</body>");
             out.println("</html>");
+            out.println("<p><a href=\"index.html\">volver</a></p>");
+            out.println("</body>");
+            out.println("</html>");
+
         }
+
     }
 
     @Override

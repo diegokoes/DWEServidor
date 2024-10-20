@@ -1,46 +1,21 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.Map"%>
+<%@page contentType="text/html"  pageEncoding="UTF-8"%>
+<%@pageimport="java.util.Map"%>
+
 <%
- Map<String, String> errores = (Map<String, String>)request.getAttribute("errores");
- %>
+Map<String,String> errores = (Map<String,String>)request.getAttribute("errores");
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Formulario de usuarios</title>
-    <!--<link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="/webapp-formBootstrap2/css/bootstrap.min.css" rel="stylesheet">
+    
 </head>
 <body>
-  <p><a href="index.html">volver</a></p>
-
 <h3>Formulario de usuarios</h3>
-
-<!--
-<%
-// FORMA 1
-if(errores != null && errores.size()>0){
-%>
-<ul class="alert alert-danger mx-5 px-5">
-<% for(String error: errores.values()){%>
-<li><%=error%></li>
-<%}%>
-</ul>
-<%}%>
--->
-
-<%
-// FORMA 2
-if(errores != null && errores.size()>0){
-  out.println("<ul class=\"alert alert-danger mx-5 px-5\">");
-    for(String error: errores.values()){
-      out.println("<li>"+error+"</li>");
-    }
-  out.println("</ul>");
-  
-}
-
-%>
 
 
 <div class="px-5">
@@ -51,33 +26,30 @@ if(errores != null && errores.size()>0){
     <div class="col-sm-4">
         <input type="text" name="username" id="username" class="form-control" value="${param.username}">
     </div>
-
-  
-      <%
-      if(errores != null && errores.containsKey("username")){
-           out.println("<small class='alert alert-danger col-sm-4' style='color: red;'>"+ errores.get("username") + "</small>");
-      }
-      %>
-  </div>
-
-  <div class="row mb-3">
-    <label for="password" class="col-form-label col-sm-2">Password</label>
-    <div class="col-sm-4"><input type="password" name="password" id="password" class="form-control"></div>
-<%
-    if(errores != null && errores.containsKey("password")){
-         out.println("<small class='alert alert-danger col-sm-4' style='color: red;'>"+ errores.get("password") + "</small>");
+    <%
+    if(errores!=null && errores.containsKey("username")){
+      out.println("<p style='color:white;background-color:red;max-width:200px';>"+errores.get("username")+"</p>");
     }
     %>
   </div>
-
+      
+  <div class="row mb-3">
+    <label for="password" class="col-form-label col-sm-2">Password</label>
+    <div class="col-sm-4"><input type="password" name="password" id="password" class="form-control" value="${param.password}"></div>
+    <%
+    if(errores!=null && errores.containsKey("password")){
+      out.println("<p style='color:white;background-color:red;max-width:200px'>"+errores.get("password")+"</p>");
+    }
+    %>  
+  </div>
   <div class="row mb-3">
     <label for="email" class="col-form-label col-sm-2">Email</label>
     <div class="col-sm-4"><input type="text" name="email" id="email" class="form-control" value="${param.email}"></div>
     <%
-        if(errores != null && errores.containsKey("email")){
-             out.println("<small class='alert alert-danger col-sm-4' style='color: red;'>"+ errores.get("email") + "</small>");
-        }
-        %>
+    if(errores!=null && errores.containsKey("email")){
+      out.println("<p style='color:white;background-color:red;max-width:200px'>"+errores.get("email")+"</p>");
+    }
+    %> 
   </div>
   <div class="row mb-3">
     <label for="pais" class="col-form-label col-sm-2">País</label>
@@ -94,10 +66,10 @@ if(errores != null && errores.size()>0){
       </select>
     </div>
     <%
-        if(errores != null && errores.containsKey("pais")){
-             out.println("<small class='alert alert-danger col-sm-4' style='color: red;'>"+ errores.get("pais") + "</small>");
-        }
-        %>
+    if(errores!=null && errores.containsKey("pais")){
+      out.println("<p style='color:white;background-color:red;max-width:200px'>"+errores.get("pais")+"</p>");
+    }
+    %>  
   </div>
 
   <div class="row mb-3">
@@ -113,10 +85,10 @@ if(errores != null && errores.size()>0){
       </select>
     </div>
     <%
-        if(errores != null && errores.containsKey("lenguajes")){
-             out.println("<small class='alert alert-danger col-sm-4' style='color: red;'>"+ errores.get("lenguajes") + "</small>");
-        }
-        %>
+    if(errores!=null && errores.containsKey("lenguajes")){
+      out.println("<p style='color:white;background-color:red;max-width:200px'>"+errores.get("lenguajes")+"</p>");
+    }
+    %> 
   </div>
 
   <div class="row mb-3">
@@ -138,10 +110,10 @@ if(errores != null && errores.size()>0){
       <label class="form-check-label">Moderador</label>
     </div>
     <%
-        if(errores != null && errores.containsKey("roles")){
-             out.println("<small class='alert alert-danger col-sm-4' style='color: red;'>"+ errores.get("roles") + "</small>");
-        }
-        %>
+    if(errores!=null && errores.containsKey("roles")){
+      out.println("<p style='color:white;background-color:red;max-width:200px'>"+errores.get("roles")+"</p>");
+    }
+    %>  
   </div>
   <div class="row mb-3">
     <label class="col-form-label col-sm-2">Idiomas</label>
@@ -158,16 +130,20 @@ if(errores != null && errores.size()>0){
       <label class="form-check-label">Frances</label>
     </div>
     <%
-        if(errores != null && errores.containsKey("idioma")){
-             out.println("<small class='alert alert-danger col-sm-4' style='color: red;'>"+ errores.get("idioma") + "</small>");
-        }
-        %>
+    if(errores!=null && errores.containsKey("idioma")){
+      out.println("<p style='color:white;background-color:red;max-width:200px'>"+errores.get("idioma")+"</p>");
+    }
+    %>  
   </div>
   <div class="row mb-3">
     <label for="habilitar" class="col-form-label col-sm-2">Habilitar</label>
     <div class="form-check col-sm-2">
-      <input type="checkbox" name="habilitar" id="habilitar" class="form-check-input" ${param.habilitar.equalsIgnoreCase("on")?"checked":""}>
-    </div>
+      <input type="checkbox" name="habilitar" id="habilitar" class="form-check-input" ${param.habilitar.equalsIgnoreCase("on")?"checked":""}>    </div>
+    <%
+    if(errores!=null && errores.containsKey("habilitar")){
+      out.println("<p style='color:white;background-color:red;max-width:200px'>"+errores.get("habilitar")+"</p>");
+    }
+    %>  
   </div>
   <div class="row mb-3">
     <div>
@@ -176,6 +152,8 @@ if(errores != null && errores.size()>0){
   </div>
   <input type="hidden" name="secreto" value="12345">
 </form>
+<p><a href="index.html">Volver</a></p>
+
 </div>
 </body>
 </html>
