@@ -20,7 +20,6 @@ public class DaoFabricante implements Dao<Fabricante>{
 
     @Override
     public Fabricante select(int id) throws SQLException {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'select'");
 
     }
@@ -68,7 +67,6 @@ public class DaoFabricante implements Dao<Fabricante>{
 
     @Override
     public void delete(int id) throws SQLException {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
