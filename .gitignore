@@ -1,3 +1,6 @@
 .vscode/
 **/.vscode/
 node_modules/
+/DWES-02
+/DWES-03
+/DWES-04
