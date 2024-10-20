@@ -79,12 +79,13 @@ public class ParamsFormServlet4 extends HttpServlet {
             errores.put("habilitar", "No has habilitado el formulario!!");
         }
 
-        resp.setContentType("text/html");
-        try (PrintWriter out = resp.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            if (errores.isEmpty()) {
+        if (errores.isEmpty()) {
+            resp.setContentType("text/html");
+
+            try (PrintWriter out = resp.getWriter()) {
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
                 out.println("<title>Reto1 resultados form</title>");
                 out.println("<body>");
                 out.println("<h1>Formulario rellenado correctamente! Tus datos: </h1>");
@@ -101,17 +102,15 @@ public class ParamsFormServlet4 extends HttpServlet {
                         .append("<p>nº secreto: " + secreto + "</p>");
 
                 out.println(sb.toString());
-
-            } else {
-                req.setAttribute("errores", errores);
-                getServletContext().getRequestDispatcher("/index4.jsp").forward(req, resp);
+                out.println("</body>");
+                out.println("</html>");
+                out.println("<p><a href=\"index.html\">volver</a></p>");
+                out.println("</body>");
+                out.println("</html>");
             }
-            out.println("</body>");
-            out.println("</html>");
-            out.println("<p><a href=\"index.html\">volver</a></p>");
-            out.println("</body>");
-            out.println("</html>");
-
+        } else {
+            req.setAttribute("errores", errores);
+            getServletContext().getRequestDispatcher("/index4.jsp").forward(req, resp);
         }
 
     }
