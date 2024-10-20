@@ -94,5 +94,6 @@
       </div>
       <input type="hidden" name="secreto" value="12345">
     </form>
+    <p><a href="index.html">Volver</a></p>
     </body>    
 </html>

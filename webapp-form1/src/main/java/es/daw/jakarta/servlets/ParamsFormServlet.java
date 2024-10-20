@@ -59,8 +59,8 @@ public class ParamsFormServlet extends HttpServlet {
     if (lenguajes == null) {
       listErrores.add("tienes que seleccionar algun lenguaje de programacion!!");
     }
-    boolean habilitado = habilitar!=null && habilitar.equals("on");
-    if(!habilitado){
+    boolean habilitado = habilitar != null && habilitar.equals("on");
+    if (!habilitado) {
       listErrores.add("No has habilitado el formulario!!");
     }
     listErrores.forEach(error -> System.out.println(error));
@@ -82,9 +82,8 @@ public class ParamsFormServlet extends HttpServlet {
           sb.append("<li>" + rol + "</li>");
         }
         sb.append("</ul></p>").append("<p>Pais: " + pais + "</p>").append("<p>Lenguajes : <ol>");
-        for (String lenguaje : lenguajes) {
-          sb.append("<li>" + lenguaje + "</li>");
-        }
+        Arrays.asList(lenguajes).forEach(lenguaje -> sb.append("<li>" + lenguaje + "</li>"));
+
         sb.append("</ol><p>Idioma: " + idioma + "</p>").append("<p>Habilitado?: " + habilitado + "</p>")
             .append("<p>nº secreto: " + secreto + "</p>");
 
@@ -105,7 +104,7 @@ public class ParamsFormServlet extends HttpServlet {
 
       }
 
-      out.println("<p><a href=\"index.jsp\">volver</a></p>");
+      out.println("<p><a href=\"index.html\">volver</a></p>");
       out.println("</body>");
       out.println("</html>");
 
