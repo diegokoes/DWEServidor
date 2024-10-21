@@ -3,6 +3,8 @@ package es.daw.web.bd;
 import java.sql.SQLException;
 import java.util.List;
 
+import es.daw.web.models.Producto;
+
 /**
  * Interfaz genérica DAO
  * @author melola

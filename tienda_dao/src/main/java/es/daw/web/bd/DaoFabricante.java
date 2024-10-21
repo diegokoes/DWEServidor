@@ -6,45 +6,45 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import es.daw.web.models.Fabricante;
 
-public class DaoFabricante implements Dao<Fabricante>{
-    
-	private Connection con;
-	
+public class DaoFabricante implements Dao<Fabricante> {
+
+    private Connection con;
+
     public DaoFabricante(String dbSettingsPropsFilePath) throws SQLException {
-		super();
-		con = DBConnection.getConnection(dbSettingsPropsFilePath);
-	}
+        super();
+        con = DBConnection.getConnection(dbSettingsPropsFilePath);
+    }
 
     @Override
     public Fabricante select(int id) throws SQLException {
-        throw new UnsupportedOperationException("Unimplemented method 'select'");
+        try (PreparedStatement ps = con.prepareStatement("SELECT * FROM producto "); ResultSet rs = ps.executeQuery()) {
 
+            Fabricante fabricante = new Fabricante();
+
+            return fabricante;
+
+        }
     }
 
     @Override
     public List<Fabricante> selectAll() throws SQLException {
+        List<Fabricante> fabricantesTodos = new ArrayList<>();
         try (PreparedStatement ps = con.prepareStatement("SELECT * FROM fabricante");
-        ResultSet rs = ps.executeQuery()){
+                ResultSet rs = ps.executeQuery()) {
 
-	        List<Fabricante> result = null;
-	
-	        while (rs.next()) {
-	            if (result == null) {
-	                result = new ArrayList<>();
-	            }
-	
-	            Fabricante p = new Fabricante();
-	            p.setCodigo(rs.getInt("codigo"));
-	            p.setNombre(rs.getString("nombre"));
-	            result.add(p);
-	            
-	        }
-	        return result;
+            while (rs.next()) {
+
+                Fabricante p = new Fabricante();
+                p.setCodigo(rs.getInt("codigo"));
+                p.setNombre(rs.getString("nombre"));
+                fabricantesTodos.add(p);
+
+            }
+            return fabricantesTodos;
         }
-		
+
     }
 
     @Override
@@ -69,6 +69,5 @@ public class DaoFabricante implements Dao<Fabricante>{
     public void delete(int id) throws SQLException {
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
-
 
 }
