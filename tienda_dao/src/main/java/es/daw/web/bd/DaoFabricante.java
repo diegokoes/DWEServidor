@@ -19,12 +19,12 @@ public class DaoFabricante implements Dao<Fabricante> {
 
     @Override
     public Fabricante select(int id) throws SQLException {
-        try (PreparedStatement ps = con.prepareStatement("SELECT * FROM producto "); ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = con.prepareStatement("SELECT * FROM fabricante ");
+                ResultSet rs = ps.executeQuery()) {
 
             Fabricante fabricante = new Fabricante();
 
             return fabricante;
-
         }
     }
 
@@ -36,10 +36,10 @@ public class DaoFabricante implements Dao<Fabricante> {
 
             while (rs.next()) {
 
-                Fabricante p = new Fabricante();
-                p.setCodigo(rs.getInt("codigo"));
-                p.setNombre(rs.getString("nombre"));
-                fabricantesTodos.add(p);
+                Fabricante fabricante = new Fabricante();
+                fabricante.setCodigo(rs.getInt("codigo"));
+                fabricante.setNombre(rs.getString("nombre"));
+                fabricantesTodos.add(fabricante);
 
             }
             return fabricantesTodos;

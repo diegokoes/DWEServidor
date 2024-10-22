@@ -9,7 +9,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.ArrayList;
 
+import es.daw.web.bd.DaoProducto;
 import es.daw.web.bd.DaoFabricante;
 import es.daw.web.models.Fabricante;
 import es.daw.web.models.Producto;
@@ -31,11 +33,10 @@ public class ListarProductosServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
 
-
         // ------------ SALIDA ------------
-        response.setContentType("text/html");
+        response.setContentType("text/html;charset=UTF=8");
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
 
         // Pendiente...

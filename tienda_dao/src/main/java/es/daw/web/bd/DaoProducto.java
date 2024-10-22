@@ -14,9 +14,15 @@ public class DaoProducto implements Dao<Producto> {
 
   private Connection con;
 
+  public DaoProducto(String dbSettingsPropsFilePath) throws SQLException {
+    super();
+    con = DBConnection.getConnection(dbSettingsPropsFilePath);
+  }
+
   @Override
   public Producto select(int id) throws SQLException {
-    throw new UnsupportedOperationException("Unimplemented method 'select'");
+    return null;
+
   }
 
   @Override
@@ -26,22 +32,22 @@ public class DaoProducto implements Dao<Producto> {
         ResultSet rs = ps.executeQuery()) {
 
       while (rs.next()) {
-        Producto p = new Producto();
-        p.setCodigo(rs.getInt("codigo"));
-        p.setNombre(rs.getString("nombre"));
-        p.setPrecio(rs.getFloat("precio"));
-        p.setCodigo_fabricante(rs.getInt("codigo_fabricante"));
-        productosTodos.add(p);
+        Producto producto = new Producto();
+        producto.setCodigo(rs.getInt("codigo"));
+        producto.setNombre(rs.getString("nombre"));
+        producto.setPrecio(rs.getFloat("precio"));
+        producto.setCodigo_fabricante(rs.getInt("codigo_fabricante"));
+        productosTodos.add(producto);
       }
-      productosTodos.sort(Comparator.comparingInt(Producto::getCodigo).reversed());
-      return productosTodos;
 
+      // productosTodos.sort(Comparator.comparingInt(Producto::getCodigo).reversed());
+      return productosTodos;
     }
   }
 
   @Override
   public void insert(Producto t) throws SQLException {
-    throw new UnsupportedOperationException("Unimplemented method 'insert'");
+
   }
 
   @Override
