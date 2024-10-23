@@ -1,12 +1,17 @@
 package es.daw.jakarta.models;
 
+import java.time.LocalDate;
+
 public class Producto {
     private Long id;
     private String nombre;
     private String tipo;
     private int precio;
+    private Categoria categoria;
+    private String sku;
+    private LocalDate fechaRegistro;
 
-    public Producto(){
+    public Producto() {
 
     }
 
@@ -20,26 +25,57 @@ public class Producto {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getNombre() {
         return nombre;
     }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
     public String getTipo() {
         return tipo;
     }
+
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
     public int getPrecio() {
         return precio;
     }
+
     public void setPrecio(int precio) {
         this.precio = precio;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    public LocalDate getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(LocalDate fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
     }
 
     @Override
@@ -78,5 +114,4 @@ public class Producto {
         return true;
     }
 
-    
 }
