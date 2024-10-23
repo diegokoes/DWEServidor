@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>es.daw</groupId>
-	<artifactId>webapp-session</artifactId>
+	<artifactId>tienda-diego-manrique</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 

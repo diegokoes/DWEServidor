@@ -3,16 +3,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Index de la practica DWES</title>
+<title>Insert title here</title>
 </head>
 <body>
-  <h3>Manejo de sesiones Http</h3>
-  <ul>
-      <li><a href="productos">Mostrar productos html</a></li>
-      <li><a href="login">Login</a></li>
-      <li><a href="logout">Logout</a></li>
-      <li><a href="carro/ver">ver carro</a></li>
-  </ul>
 
 </body>
 </html>
